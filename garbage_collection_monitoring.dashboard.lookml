@@ -55,6 +55,8 @@
     truncate_column_names: false
     series_types: {}
     defaults_version: 1
+    hidden_fields: []
+    y_axes: []
     listen: {}
     row: 8
     col: 0
@@ -231,6 +233,7 @@
     comparison_reverse_colors: false
     show_comparison_label: true
     defaults_version: 1
+    hidden_fields: []
     listen: {}
     row: 14
     col: 16
@@ -324,12 +327,13 @@
         italic: false, strikethrough: false, fields: [total_query_tiles]}]
     truncate_column_names: true
     series_types: {}
-    hidden_fields:
+    hidden_fields: []
     note_state: collapsed
     note_display: hover
     note_text: Load times and general instance health may be impacted on dashboards
       with more than 25 tiles.
     defaults_version: 1
+    y_axes: []
     listen: {}
     row: 1
     col: 0
@@ -404,12 +408,13 @@
         italic: false, strikethrough: false, fields: []}]
     truncate_column_names: true
     series_types: {}
-    hidden_fields:
+    hidden_fields: []
     note_state: collapsed
     note_display: hover
     note_text: Load times and general instance health may be impacted on dashboards
       with more than 25 tiles.
     defaults_version: 1
+    y_axes: []
     listen: {}
     row: 1
     col: 8
@@ -485,14 +490,130 @@
         italic: false, strikethrough: false, fields: [total_query_tiles]}]
     truncate_column_names: true
     series_types: {}
-    hidden_fields:
+    hidden_fields: []
     note_state: collapsed
     note_display: hover
     note_text: Load times and general instance health may be impacted on dashboards
       with more than 25 tiles.
     defaults_version: 1
+    y_axes: []
     listen: {}
     row: 1
     col: 16
     width: 8
     height: 6
+  - name: Long-Running Content and Schedules
+    type: text
+    title_text: Long-Running Content and Schedules
+    subtitle_text: ''
+    body_text: ''
+    row: 20
+    col: 0
+    width: 24
+    height: 1
+  - title: Long-Running Schedules
+    name: Long-Running Schedules
+    model: system__activity
+    explore: scheduled_plan
+    type: looker_grid
+    fields: [scheduled_job_stage.started_time, scheduled_job_stage.completed_time,
+      scheduled_job_stage.scheduled_job_id, scheduled_job_stage.avg_runtime, scheduled_plan.id,
+      scheduled_plan.name, scheduled_plan.content_type_id]
+    filters:
+      scheduled_job_stage.stage: execute
+    sorts: [scheduled_job_stage.avg_runtime desc]
+    limit: 500
+    query_timezone: America/Los_Angeles
+    show_view_names: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    listen: {}
+    row:
+    col:
+    width:
+    height:
+  - title: Long-Running Dashboards
+    name: Long-Running Dashboards
+    model: system__activity
+    explore: history
+    type: looker_grid
+    fields: [dashboard.id, dashboard.title, dashboard.link, history.average_runtime,
+      history.query_run_count, history.cache_result_query_count, history.database_result_query_count]
+    filters:
+      query.model: ''
+      dashboard.id: NOT NULL
+    sorts: [history.average_runtime desc]
+    limit: 500
+    dynamic_fields: [{measure: median_of_runtime_in_seconds, based_on: history.runtime,
+        expression: '', label: Median of Runtime in Seconds, type: median, _kind_hint: measure,
+        _type_hint: number}]
+    show_view_names: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    listen: {}
+    row:
+    col:
+    width:
+    height:
+  - title: Long-Running Looks
+    name: Long-Running Looks
+    model: system__activity
+    explore: history
+    type: looker_grid
+    fields: [history.average_runtime, history.query_run_count, history.cache_result_query_count,
+      history.database_result_query_count, look.id, look.title, look.link]
+    filters:
+      query.model: ''
+      look.id: NOT NULL
+    sorts: [history.average_runtime desc]
+    limit: 500
+    dynamic_fields: [{measure: median_of_runtime_in_seconds, based_on: history.runtime,
+        expression: '', label: Median of Runtime in Seconds, type: median, _kind_hint: measure,
+        _type_hint: number}]
+    show_view_names: false
+    show_row_numbers: true
+    transpose: false
+    truncate_text: true
+    hide_totals: false
+    hide_row_totals: false
+    size_to_fit: true
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    header_text_alignment: left
+    header_font_size: 12
+    rows_font_size: 12
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    defaults_version: 1
+    listen: {}
+    row:
+    col:
+    width:
+    height:
